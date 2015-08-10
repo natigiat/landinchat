@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Socket.IO chat</title>
+	    <style>
+	      * { margin: 0; padding: 0; box-sizing: border-box; }
+	      body { font: 13px Helvetica, Arial; }
+	      form { background: #000; padding: 3px;  bottom: 0; width: 100%; }
+	      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+	      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+	      #messages { list-style-type: none; margin: 0; padding: 0; }
+	      #messages li { padding: 5px 10px; }
+	      #messages li:nth-child(odd) { background: #eee; }
+	    </style>
+
+		<!-- Bootstrap CSS -->
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		
+		<div id="chat" class="col-sm-8 col-sm-offset-2">
+			<div id="#userCount">
+				sdfsfg
+			</div>
+
+
+			<ul id="messages"></ul>
+		    <form action="" class="footer">
+		      <input id="m" autocomplete="off" /><button>Send</button>
+		    </form>
+	    </div>
+
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+		<script>
+		  jQuery(document).ready(function($) {
+		  	
+	
+
+		  $('#userCount').append('Some text');
+
+		  var socket = io();
+		  $('form').submit(function(){
+		    socket.emit('chat message', $('#m').val());
+		    $('#m').val('');
+		    return false;
+		  });
+
+		  socket.on('chat message', function(msg){
+		    $('#messages').append($('<li>').text(msg));
+		    console.log(msg);
+		  });
+
+		  socket.on('userCount', function (data) {
+			console.log(data);
+			$('#userCount').text(data);
+   		  });
+
+   		  });
+
+		</script>
+	</body>
+</html>
